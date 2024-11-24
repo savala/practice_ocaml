@@ -1,5 +1,3 @@
-let () = print_endline "Hello, Sai!"
-
 (*let () = Printf.printf "%s\n" Practice_ocaml.En.e*)
 
 let last_elem list =
@@ -13,6 +11,11 @@ let rec sum_list list =
   | x :: rest -> x + sum_list rest
 
 let my_list = [1; 2; 3; 4]
-let () = last_elem my_list
-let () = let result = sum_list my_list in 
-  print_endline (string_of_int result)
+
+let main () = 
+  print_endline "Hello, Sai!";
+  last_elem my_list;
+  let result = sum_list my_list in
+    print_endline (string_of_int result)
+
+let () = main ()
