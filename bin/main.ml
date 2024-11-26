@@ -21,16 +21,36 @@ let rec list_length list curr =
   | [] -> curr
   | _ :: rest -> list_length rest (curr+1)
 
-let my_list = [1; 2; 3; 4]
+let palindrome list =
+  List.rev list = list
+
+let rev list =
+  let rec aux acc = function
+    | [] -> acc
+    | x :: rest -> aux (x :: acc) rest
+  in aux [] list
+
+let numbers = [1; 2; 3; 4];;
+let letters = ["a"; "b"; "a"];;
 
 let main () = 
   print_endline "Hello, Sai!";
-  last_elem my_list;
-  let result = sum_list my_list in
+  last_elem numbers;
+  let result = sum_list numbers in
     print_endline (string_of_int result);
-  let result = nth_elem 2 my_list in
+  let result = nth_elem 2 numbers in
     print_endline (string_of_int result);
-  let result = list_length my_list 0 in
-    print_endline (string_of_int result)
+  let result = list_length numbers 0 in
+    print_endline (string_of_int result);
+  let result = palindrome letters in
+    print_endline (string_of_bool result);
+    let x = rev numbers in 
+  let rec b = function
+   | [] -> ()
+   | xx :: rest ->
+    print_endline (string_of_int xx);
+    b rest;
+   in b x
+    
 
 let () = main ()
