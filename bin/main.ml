@@ -30,6 +30,10 @@ let rev list =
     | x :: rest -> aux (x :: acc) rest
   in aux [] list
 
+let rec remove_at n = function
+  | [] -> []
+  | item :: rest -> if n = 0 then rest else item :: remove_at (n-1) rest
+
 let numbers = [1; 2; 3; 4];;
 let letters = ["a"; "b"; "a"];;
 
@@ -44,13 +48,13 @@ let main () =
     print_endline (string_of_int result);
   let result = palindrome letters in
     print_endline (string_of_bool result);
-    let x = rev numbers in 
-  let rec b = function
-   | [] -> ()
-   | xx :: rest ->
-    print_endline (string_of_int xx);
-    b rest;
-   in b x
+ let result = remove_at 2 numbers in 
+    let rec b = function
+    | [] -> ()
+    | h :: rest ->
+      print_endline (string_of_int h);
+      b rest;
+    in b result
     
 
 let () = main ()
