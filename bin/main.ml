@@ -34,6 +34,18 @@ let rec remove_at n = function
   | [] -> []
   | item :: rest -> if n = 0 then rest else item :: remove_at (n-1) rest
 
+let rec insert_at item pos items = 
+  match items, pos with
+  | [], _ -> [item]
+  | h :: rest, 0 -> h :: item :: rest
+  | h :: rest, _ -> h :: insert_at item (pos - 1) rest
+
+let rec print_list_str = function
+  | [] -> ()
+  | h :: rest ->
+    print_endline h;
+    print_list_str rest
+
 let numbers = [1; 2; 3; 4];;
 let letters = ["a"; "b"; "a"];;
 
@@ -54,7 +66,13 @@ let main () =
     | h :: rest ->
       print_endline (string_of_int h);
       b rest;
-    in b result
+    in b result;
+  let result = rev letters in
+    print_list_str result;
+  print_endline "";
+  let result = insert_at "ah" 1 letters in
+    print_list_str result
+
     
 
 let () = main ()
