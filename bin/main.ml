@@ -56,18 +56,21 @@ let rand_select list num =
     else acc
   in aux [] (Array.of_list list) num 0
 
+let swap arr i j = 
+  let temp = arr.(i) in 
+  arr.(i) <- arr.(j);
+  arr.(j) <- temp
+
 let permutation list = 
-  let arr = Array.of_list list in
-  let n = Array.length arr in
+  let acc = Array.of_list list in
+  let n = Array.length acc in
   let rec aux start n acc = 
     if start < n then
       let idx = Random.int (n) in
-      let x = arr.(idx) in
-      arr.(idx) <- arr.(start);
-      arr.(start) <- x;
-      aux (start+1) n acc
-    else Array.to_list arr
-  in aux 0 n arr
+        swap acc start idx;
+        aux (start + 1) n acc
+    else Array.to_list acc
+  in aux 0 n acc
 
 let rec print_list_str = function
   | [] -> ()
