@@ -34,17 +34,28 @@ let rec remove_at n = function
   | [] -> []
   | item :: rest -> if n = 0 then rest else item :: remove_at (n-1) rest
 
-let rec insert_at item pos items = 
-  match items, pos with
-  | [], _ -> [item]
-  | h :: rest, 0 -> h :: item :: rest
-  | h :: rest, _ -> h :: insert_at item (pos - 1) rest
+let rec insert_at item pos = function
+  | [] -> [item]
+  | h :: rest as l -> if pos = 0 then item :: l else h :: insert_at item (pos-1) rest
+
+let range a b = 
+  let rec aux a b =
+    if a > b then a :: aux (a-1) b
+    else if a < b then a :: aux (a+1) b
+    else [a]
+  in aux a b
 
 let rec print_list_str = function
   | [] -> ()
   | h :: rest ->
     print_endline h;
     print_list_str rest
+
+let rec print_list_int = function
+  | [] -> ()
+  | h :: rest -> 
+    print_endline (string_of_int h);
+    print_list_int rest
 
 let numbers = [1; 2; 3; 4];;
 let letters = ["a"; "b"; "a"];;
@@ -71,8 +82,12 @@ let main () =
     print_list_str result;
   print_endline "";
   let result = insert_at "ah" 1 letters in
-    print_list_str result
-
+    print_list_str result;
+  let result = range 2 7 in
+    print_list_int result;
+  print_endline "";
+  let result = range 7 2 in
+    print_list_int result
     
 
 let () = main ()
