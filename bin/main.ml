@@ -45,6 +45,17 @@ let range a b =
     else a :: accum
   in aux a b []
 
+let rand_select list num =
+  Random.init 0;
+  let random_item arr = 
+    let n = Random.int (Array.length arr) in
+      Array.get arr n 
+    in
+  let rec aux acc list num count = 
+    if count < num then aux ((random_item list) :: acc) list num (count+1)
+    else acc
+  in aux [] (Array.of_list list) num 0
+
 let rec print_list_str = function
   | [] -> ()
   | h :: rest ->
@@ -58,7 +69,7 @@ let rec print_list_int = function
     print_list_int rest
 
 let numbers = [1; 2; 3; 4];;
-let letters = ["a"; "b"; "a"];;
+let letters = ["c"; "b"; "a"];;
 
 let main () = 
   print_endline "Hello, Sai!";
@@ -87,7 +98,9 @@ let main () =
     print_list_int result;
   print_endline "";
   let result = range 7 2 in
-    print_list_int result
+    print_list_int result;
+  let result = rand_select letters 5 in
+    print_list_str result
     
 
 let () = main ()
