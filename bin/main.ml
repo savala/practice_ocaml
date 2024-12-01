@@ -62,15 +62,15 @@ let swap arr i j =
   arr.(j) <- temp
 
 let permutation list = 
-  let acc = Array.of_list list in
-  let n = Array.length acc in
+  let arr = Array.of_list list in
+  let n = Array.length arr in
   let rec aux start n acc = 
     if start < n then
       let idx = Random.int (n) in
         swap acc start idx;
         aux (start + 1) n acc
     else Array.to_list acc
-  in aux 0 n acc
+  in aux 0 n arr
 
 let rec print_list_str = function
   | [] -> ()
