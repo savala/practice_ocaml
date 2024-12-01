@@ -39,11 +39,11 @@ let rec insert_at item pos = function
   | h :: rest as l -> if pos = 0 then item :: l else h :: insert_at item (pos-1) rest
 
 let range a b = 
-  let rec aux a b =
-    if a > b then a :: aux (a-1) b
-    else if a < b then a :: aux (a+1) b
-    else [a]
-  in aux a b
+  let rec aux a b accum =
+    if a > b then aux (a-1) b (a :: accum)
+    else if a < b then aux (a+1) b (a :: accum)
+    else a :: accum
+  in aux a b []
 
 let rec print_list_str = function
   | [] -> ()
