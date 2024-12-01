@@ -56,6 +56,19 @@ let rand_select list num =
     else acc
   in aux [] (Array.of_list list) num 0
 
+let permutation list = 
+  let arr = Array.of_list list in
+  let n = Array.length arr in
+  let rec aux start n acc = 
+    if start < n then
+      let idx = Random.int (n) in
+      let x = arr.(idx) in
+      arr.(idx) <- arr.(start);
+      arr.(start) <- x;
+      aux (start+1) n acc
+    else Array.to_list arr
+  in aux 0 n arr
+
 let rec print_list_str = function
   | [] -> ()
   | h :: rest ->
@@ -69,7 +82,7 @@ let rec print_list_int = function
     print_list_int rest
 
 let numbers = [1; 2; 3; 4];;
-let letters = ["c"; "b"; "a"];;
+let letters = ["c"; "b"; "a"; "d"; "e"];;
 
 let main () = 
   print_endline "Hello, Sai!";
@@ -100,6 +113,9 @@ let main () =
   let result = range 7 2 in
     print_list_int result;
   let result = rand_select letters 5 in
+    print_list_str result;
+  print_endline "";
+  let result = permutation letters in
     print_list_str result
     
 
