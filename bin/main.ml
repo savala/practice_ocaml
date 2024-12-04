@@ -72,6 +72,17 @@ let permutation list =
     else Array.to_list acc
   in aux 0 n arr
 
+let is_prime num = 
+  let rec aux curr amt = 
+    match curr with
+    | 1 -> false
+    | _ ->
+      if amt = 1 then aux curr (amt+1)
+      else if amt >= (curr / 2) then true
+      else if (curr mod amt) = 0 then false
+      else aux curr (amt+1)
+  in aux num 1
+
 let rec print_list_str = function
   | [] -> ()
   | h :: rest ->
@@ -119,7 +130,8 @@ let main () =
     print_list_str result;
   print_endline "";
   let result = permutation letters in
-    print_list_str result
+    print_list_str result;
+  let result = not (is_prime 12) in print_endline (string_of_bool result)
     
 
 let () = main ()
