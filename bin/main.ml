@@ -78,6 +78,11 @@ let is_prime num =
     idx*idx > num || (num mod idx <> 0 && is_not_divisor (idx+1))
   in num > 1 && is_not_divisor 2
 
+let rec gcd a b =
+  if a = 0 then b else gcd (b mod a) a
+
+let coprime a b = gcd a b = 1
+
 let rec print_list_str = function
   | [] -> ()
   | h :: rest ->
@@ -126,7 +131,11 @@ let main () =
   print_endline "";
   let result = permutation letters in
     print_list_str result;
-  let result = is_prime 7 in print_endline (string_of_bool result)
+  let result = is_prime 7 in print_endline (string_of_bool result);
+  print_endline "";
+  let result = gcd 20536 7826 in print_endline(string_of_int result);
+  let result = coprime 13 27 in print_endline (string_of_bool result);
+  let result = coprime 20536 7826 in print_endline (string_of_bool result)
     
 
 let () = main ()
