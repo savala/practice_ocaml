@@ -83,6 +83,14 @@ let rec gcd a b =
 
 let coprime a b = gcd a b = 1
 
+let phi m =
+  let rec count_coprime m idx count =
+    if idx < m then
+      count_coprime m (idx+1) (if coprime idx m then (count+1) else count)
+    else
+      count
+  in count_coprime m 1 0
+
 let rec print_list_str = function
   | [] -> ()
   | h :: rest ->
@@ -135,7 +143,9 @@ let main () =
   print_endline "";
   let result = gcd 20536 7826 in print_endline(string_of_int result);
   let result = coprime 13 27 in print_endline (string_of_bool result);
-  let result = coprime 20536 7826 in print_endline (string_of_bool result)
+  let result = coprime 20536 7826 in print_endline (string_of_bool result);
+  print_endline "";
+  let result = phi 10 in print_endline (string_of_int result)
     
 
 let () = main ()
