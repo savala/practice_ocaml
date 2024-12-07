@@ -91,6 +91,13 @@ let phi m =
       count
   in count_coprime m 1 0
 
+let factors n = 
+  let rec aux n i = 
+    if n = 1 then []
+    else
+      if n mod i = 0 then i :: aux (n/i) i else aux n (i+1)
+  in aux n 2
+
 let rec print_list_str = function
   | [] -> ()
   | h :: rest ->
@@ -145,7 +152,9 @@ let main () =
   let result = coprime 13 27 in print_endline (string_of_bool result);
   let result = coprime 20536 7826 in print_endline (string_of_bool result);
   print_endline "";
-  let result = phi 10 in print_endline (string_of_int result)
+  let result = phi 10 in print_endline (string_of_int result);
+  print_endline "";
+  let result = factors 315 in print_list_int result
     
 
 let () = main ()
