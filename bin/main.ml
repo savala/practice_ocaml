@@ -21,14 +21,15 @@ let rec list_length list curr =
   | [] -> curr
   | _ :: rest -> list_length rest (curr+1)
 
-let palindrome list =
-  List.rev list = list
-
 let rev list =
   let rec aux acc = function
     | [] -> acc
     | x :: rest -> aux (x :: acc) rest
   in aux [] list
+
+let palindrome list = 
+  let reversed_list = rev list in 
+  reversed_list = list
 
 let rec remove_at n = function
   | [] -> []
@@ -99,9 +100,9 @@ let factors n =
   in aux n 2
 
 let rec print_list_str = function
-  | [] -> ()
+  | [] -> print_endline ""
   | h :: rest ->
-    print_endline h;
+    Printf.printf "%s " h;
     print_list_str rest
 
 let rec print_list_int = function
@@ -110,8 +111,56 @@ let rec print_list_int = function
     print_endline (string_of_int h);
     print_list_int rest
 
-let numbers = [1; 2; 3; 4];;
-let letters = ["c"; "b"; "a"; "d"; "e"];;
+let encode list = 
+  let rec aux count encoding = function
+    | [] -> []
+    | [head] -> (count+1, head) :: encoding
+    | a :: (b :: _ as t) ->
+      if a = b then aux (count+1) encoding t
+      else aux 0 ((count+1, a) :: encoding) t
+  in aux 0 [] list
+
+let pack list = 
+  let rec aux sublist acc = function
+    | [] -> []
+    | [head] -> (head :: sublist) :: acc
+    | a :: (b :: _ as t) ->
+      if a = b then aux (a :: sublist) acc t
+      else aux [] ((a :: sublist) :: acc) t
+    in aux [] [] list
+
+let rec max_elem = function
+  | [] -> min_int
+  | [x] -> x
+  | x :: rest ->  
+    let item = max_elem rest in
+    if x > item then x else item
+
+let rec duplicate result = function
+  | [] -> rev result
+  | x :: rest -> duplicate (x :: x :: result) rest
+
+let repeat n a =
+  let rec helper n a acc = 
+    match n with 
+    | 0 -> acc
+    | _ -> helper (n-1) a (a :: acc)
+  in helper n a []
+
+let rec append l1 l2 =
+  match l1 with 
+  | [] -> l2
+  | x :: rest -> x :: append rest l2
+
+let rec replicate list n =
+  match list with 
+  | [] -> []
+  | x :: rest -> append (repeat n x) (replicate rest n)
+
+let numbers = [1; 2; 3; 4; 7; 1];;
+let letters = ["c"; "b"; "a"; "d"; "e"; "e"; "e"];;
+
+let pal = ["c"; "a"; "c"];;
 
 let main () = 
   print_endline "Hello, Sai!";
@@ -122,7 +171,8 @@ let main () =
     print_endline (string_of_int result);
   let result = list_length numbers 0 in
     print_endline (string_of_int result);
-  let result = palindrome letters in
+  print_endline "palindrome";
+  let result = palindrome pal in
     print_endline (string_of_bool result);
  let result = remove_at 2 numbers in 
     let rec b = function
@@ -154,7 +204,35 @@ let main () =
   print_endline "";
   let result = phi 10 in print_endline (string_of_int result);
   print_endline "";
-  let result = factors 315 in print_list_int result
-    
+  let result = factors 315 in print_list_int result;
+  print_endline "";
+  let result = encode letters in
+    let rec print_encoding = function
+     | [] -> ()
+     | [x] -> Printf.printf "%d %s\n" (fst x) (snd x)
+     | x :: rest -> 
+      Printf.printf "%d %s\n" (fst x) (snd x);
+      print_encoding rest
+     in print_encoding result;
+  print_endline "";
+  let result = pack ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "d"; "e"; "e"; "e"; "e"] in 
+    let rec print_sublist_str = function
+    | [] -> print_endline ""
+    | [x] -> 
+      print_list_str x;
+      print_endline ""
+    | x :: rest -> 
+      print_list_str x;
+      print_endline "";
+      print_sublist_str rest;
+  in print_sublist_str result;
+  print_endline "";
+  let result = rev ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "d"; "e"; "e"; "e"; "e"] in
+    print_list_str result;
+  let result = max_elem numbers in print_endline (string_of_int result);
+  let result = duplicate [] ["a"; "b"; "c"; "c"; "d"] in
+    print_list_str result;
+  let result = replicate ["a"; "b"; "c"] 3 in 
+    print_list_str result
 
 let () = main ()
