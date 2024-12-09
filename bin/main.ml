@@ -140,22 +140,15 @@ let rec duplicate result = function
   | [] -> rev result
   | x :: rest -> duplicate (x :: x :: result) rest
 
-let repeat n a =
-  let rec helper n a acc = 
-    match n with 
-    | 0 -> acc
-    | _ -> helper (n-1) a (a :: acc)
-  in helper n a []
-
-let rec append l1 l2 =
-  match l1 with 
-  | [] -> l2
-  | x :: rest -> x :: append rest l2
-
-let rec replicate list n =
-  match list with 
-  | [] -> []
-  | x :: rest -> append (repeat n x) (replicate rest n)
+let replicate list n =
+  let rec prepend n acc a = 
+    if n = 0 then acc else prepend (n-1) (a :: acc) a
+  in
+  let rec aux list n acc =
+    match list with 
+    | [] -> acc
+    | x :: rest -> aux rest n (prepend n acc x)
+  in rev (aux list n [])
 
 let numbers = [1; 2; 3; 4; 7; 1];;
 let letters = ["c"; "b"; "a"; "d"; "e"; "e"; "e"];;
