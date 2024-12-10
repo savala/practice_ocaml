@@ -136,6 +136,13 @@ let rec max_elem = function
     let item = max_elem rest in
     if x > item then x else item
 
+let rec min_elem = function
+  | [] -> max_int
+  | [x] -> x
+  | x :: rest ->
+    let item = min_elem rest in
+    if x < item then x else item
+
 let rec duplicate result = function
   | [] -> rev result
   | x :: rest -> duplicate (x :: x :: result) rest
@@ -223,6 +230,8 @@ let main () =
   let result = rev ["a"; "a"; "a"; "a"; "b"; "c"; "c"; "a"; "a"; "d"; "d"; "e"; "e"; "e"; "e"] in
     print_list_str result;
   let result = max_elem numbers in print_endline (string_of_int result);
+  print_endline "min";
+  let result = min_elem numbers in print_endline (string_of_int result);
   let result = duplicate [] ["a"; "b"; "c"; "c"; "d"] in
     print_list_str result;
   let result = replicate ["a"; "b"; "c"] 3 in 
