@@ -143,6 +143,14 @@ let rec min_elem = function
     let item = min_elem rest in
     if x < item then x else item
 
+let calc_avg list = 
+  let rec aux list curr_sum count = 
+    match list with
+    | [] -> 0
+    | [x] -> (curr_sum + x) / (count + 1)
+    | x :: xs -> aux xs (curr_sum + x) (count + 1)
+  in aux list 0 0 
+
 let rec duplicate result = function
   | [] -> rev result
   | x :: rest -> duplicate (x :: x :: result) rest
@@ -235,6 +243,7 @@ let main () =
   let result = duplicate [] ["a"; "b"; "c"; "c"; "d"] in
     print_list_str result;
   let result = replicate ["a"; "b"; "c"] 3 in 
-    print_list_str result
+    print_list_str result;
+  let result = calc_avg numbers in print_endline (string_of_int result)
 
 let () = main ()
