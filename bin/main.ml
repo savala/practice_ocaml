@@ -165,6 +165,15 @@ let replicate list n =
     | x :: rest -> aux rest n (prepend n acc x)
   in rev (aux list n [])
 
+let drop list nth = 
+  let rec aux list n acc = 
+    match list with
+    | [] -> acc
+    | x :: xs -> 
+      if n = 1 then aux xs nth acc
+      else aux xs (n-1) (x::acc)
+  in rev (aux list nth [])
+
 let numbers = [1; 2; 3; 4; 7; 1];;
 let letters = ["c"; "b"; "a"; "d"; "e"; "e"; "e"];;
 
@@ -244,6 +253,9 @@ let main () =
     print_list_str result;
   let result = replicate ["a"; "b"; "c"] 3 in 
     print_list_str result;
-  let result = calc_avg numbers in print_endline (string_of_int result)
+  let result = calc_avg numbers in print_endline (string_of_int result);
+  print_endline "";
+  let result = drop ["a"; "b"; "c"; "d"; "e"; "f"; "g"; "h"; "i"; "j"] 3 in
+    print_list_str result
 
 let () = main ()
